@@ -9,6 +9,7 @@ public class Electron : MonoBehaviour {
 	private Transform target;
 	private int currentPoint = 0;
 	public GameObject explosionEffect;
+	public ElectronManager eManager;
 	bool isNew = true;
 
 	// Use this for initialization
@@ -39,7 +40,7 @@ public class Electron : MonoBehaviour {
 			if(Vector2.Distance(transform.position, Waypoints.points[0].position) <= 1f)
 
 			{
-
+				//Explode and add score
 				Explode ();
 
 			}
@@ -69,5 +70,6 @@ public class Electron : MonoBehaviour {
 
 		Destroy (Instantiate (explosionEffect), 3.3f);
 		Destroy (gameObject);
+		eManager.AddScore ();
 	}
 }
