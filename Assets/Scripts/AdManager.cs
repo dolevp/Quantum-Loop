@@ -7,10 +7,13 @@ public class AdManager : MonoBehaviour {
 
 
 	private BannerView bannerView;
+	private InterstitialAd interstitial;
 
 	// Use this for initialization
 	public void Start()
 	{
+
+		DontDestroyOnLoad (gameObject);
 		
 		string appId = "ca-app-pub-6666466886819761~6804495357";
 
@@ -19,6 +22,7 @@ public class AdManager : MonoBehaviour {
 		MobileAds.Initialize(appId);
 
 		this.RequestBanner ();
+		this.RequestInter ();
 	}
 	
 	private void RequestBanner()
@@ -41,14 +45,24 @@ public class AdManager : MonoBehaviour {
 
 	}
 
-	public void RequestInter(){
+	private void RequestInter(){
 
 		string adUnitId = "ca-app-pub-6666466886819761/3300364611";
+
+		// Initialize an InterstitialAd.
+		interstitial = new InterstitialAd(adUnitId);
+		// Create an empty ad request.
+		AdRequest request = new AdRequest.Builder().Build();
+		// Load the interstitial with the request.
+		interstitial.LoadAd(request);
 
 	}
 
 	public void ShowInter(){
 
+		if (interstitial.IsLoaded()) {
+			interstitial.Show();
+		}
 
 	}
 

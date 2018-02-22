@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour {
 	public Animator anim;
 	public AudioSource gameOver;
 	public bool isGameOver = false;
+	public AdManager adManager;
 	// Use this for initialization
 	void Start () {
 
 		anim = GetComponent<Animator> ();
+		adManager = GameObject.Find ("AdManager").GetComponent<AdManager> ();
 	}
 	
 	public void GameOverAnim(){
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour {
 	}
 	public void RestartScene(){
 
+		adManager.ShowInter ();
 		SceneManager.LoadScene ("Main");
 
 	}
