@@ -20,6 +20,7 @@ public class ElectronManager : MonoBehaviour {
 	public AudioSource swoosh, nextlevel;
 	private Vector2 startPosition;
 	bool gameOver;
+	public bool gamePaused = true;
 
 	// Use this for initialization
 	void Start () {
@@ -37,11 +38,17 @@ public class ElectronManager : MonoBehaviour {
 
 	}
 
+	public void Pause(){
+
+		gamePaused = true;
+
+	}
+
 	void Update(){
 
 		transform.position = Vector2.MoveTowards (transform.position, newLocation, 2.7f * Time.deltaTime);
 
-		if (Input.GetMouseButtonDown (0) && numberOfSpots < levelSpots && !Camera.main.GetComponent<GameManager>().isGameOver) {
+		if (Input.GetMouseButtonDown (0) && numberOfSpots < levelSpots && !Camera.main.GetComponent<GameManager>().isGameOver && !gamePaused) {
 
 			RemoveSpot ();
 			SpawnElectron ();

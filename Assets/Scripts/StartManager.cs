@@ -6,14 +6,18 @@ public class StartManager : MonoBehaviour {
 
 
 	public Animator startAnim;
+	public ElectronManager eManager;
 
 	void Update(){
 
 
-		if (Input.GetMouseButton (0))
+		if (Input.GetMouseButton (0)) {
 			startAnim.Play ("Start");
-
+//			eManager.gamePaused = false;
+		}
 	}
+
+
 	
 
 }

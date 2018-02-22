@@ -22,17 +22,17 @@ public class Electron : MonoBehaviour {
 
 	void Update () {
 
-		Vector2 dir = target.position - transform.position;
-		transform.Translate (dir.normalized * speed * Time.deltaTime, Space.World);
-
-		if(Vector2.Distance(transform.position, target.position) <= 0.15f)
-
-		{
+		if (!eManager.gamePaused) {
 			
-				GetNextWaypoint();
+			Vector2 dir = target.position - transform.position;
+			transform.Translate (dir.normalized * speed * Time.deltaTime, Space.World);
 
+			if (Vector2.Distance (transform.position, target.position) <= 0.15f) {
+			
+				GetNextWaypoint ();
+
+			}
 		}
-
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
