@@ -9,6 +9,7 @@ public class ElectronManager : MonoBehaviour {
 	[SerializeField]
 	private GameObject electronPrefab;
 	public int maxElectrons = 6;
+	private float electronSpeed = 3f;
 	public GameObject explosionEffect;
 	public int numberOfSpots,score, levelSpots = 0;
 	public Text scoreText;
@@ -19,7 +20,7 @@ public class ElectronManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		startPosition = transform.position;
+		startPosition = new Vector2(transform.position.x, transform.position.y - 0.37f);
 		newLocation = transform.position;
 		launcherSpots = new GameObject[transform.childCount];
 		levelSpots = 4;
@@ -59,17 +60,16 @@ public class ElectronManager : MonoBehaviour {
 
 
 
-//		GameObject babyElectron = (GameObject)Instantiate (electronPrefab, Waypoints.points [0], true);
-//		babyElectron.GetComponent<Electron> ().explosionEffect = explosionEffect;
-//		babyElectron.GetComponent<Electron> ().eManager = this;
+
 		electrons [numberOfSpots] = (GameObject)Instantiate (electronPrefab, Waypoints.points [0], true);
 		electrons[numberOfSpots].GetComponent<Electron> ().explosionEffect = explosionEffect;
 		electrons[numberOfSpots].GetComponent<Electron> ().eManager = this;
+		electrons [numberOfSpots].GetComponent<Electron> ().speed = electronSpeed;
 		numberOfSpots++;
 		AddScore ();
 
 		if (numberOfSpots >= levelSpots)
-			RestartGame ();
+			NextStep ();
 
 
 	}
@@ -100,20 +100,34 @@ public class ElectronManager : MonoBehaviour {
 
 	}
 
-	public void RestartGame(){
+	public void NextStep(){
 
-		//Restart
+		//Restart Game
+		// -------------------------
+
+		//Reset current active spots count
+		numberOfSpots = 0;
+
+		if(levelSpots<=8)
+			levelSpots++;
+		//Destroy Electrons
 		foreach (GameObject go in electrons) {
 
 			Destroy (go);
 
 		}
 
+		//Set spots
 		SetSpots ();
 
-		transform.position = startPosition;
+
+		newLocation = startPosition;
+
+
+		electronSpeed += 0.7f;
 
 		//Make it harder
+
 
 	}
 
