@@ -67,6 +67,7 @@ public class ElectronManager : MonoBehaviour {
 		electrons[numberOfSpots].GetComponent<Electron> ().explosionEffect = explosionEffect;
 		electrons[numberOfSpots].GetComponent<Electron> ().eManager = this;
 		electrons [numberOfSpots].GetComponent<Electron> ().speed = electronSpeed;
+		electrons [numberOfSpots].GetComponent<SpriteRenderer> ().color = launcherSpots [numberOfSpots].GetComponent<SpriteRenderer> ().color;
 		numberOfSpots++;
 		AddScore ();
 
