@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	public AudioSource gameOver;
 	public bool isGameOver = false;
 	public AdManager adManager;
+	public ElectronManager eManager;
 	// Use this for initialization
 	void Start () {
 
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour {
 	public void GameOverAnim(){
 
 
+		if(eManager.score > PlayerPrefs.GetInt("Best"))
+			PlayerPrefs.SetInt("Best", eManager.score);
 		isGameOver = true;
 		anim.Play ("GameOver");
 		gameOver.Play ();

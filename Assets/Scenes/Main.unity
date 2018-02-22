@@ -3459,6 +3459,7 @@ MonoBehaviour:
   gameOver: {fileID: 2100623873}
   isGameOver: 0
   adManager: {fileID: 0}
+  eManager: {fileID: 1891171026}
 --- !u!82 &2100623873
 AudioSource:
   m_ObjectHideFlags: 0
