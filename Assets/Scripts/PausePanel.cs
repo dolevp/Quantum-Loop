@@ -27,7 +27,9 @@ public class PausePanel : MonoBehaviour {
 
 
 	public void BackToMenu(){
-		
+
+		if(eManager.score > PlayerPrefs.GetInt("Best"))
+			PlayerPrefs.SetInt("Best", eManager.score);
 		Time.timeScale = 1;
 		eManager.gamePaused = false;
 		SceneManager.LoadScene ("Menu");
