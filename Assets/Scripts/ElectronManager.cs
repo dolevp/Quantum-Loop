@@ -8,31 +8,79 @@ public class ElectronManager : MonoBehaviour {
 
 	[SerializeField]
 	private GameObject electronPrefab;
-	public float spawnSpeed;
 	public int maxElectrons = 6;
 	public GameObject explosionEffect;
-	public int score = 0;
+	public int numberOfSpots,score, levelSpots = 0;
 	public Text scoreText;
+	public GameObject[] launcherSpots;
+	public List<GameObject> electrons;
+	private Vector2 newLocation;
+	private Vector2 startPosition;
 	// Use this for initialization
 	void Start () {
 
-		spawnSpeed = 2.1f;
+		startPosition = transform.position;
+		newLocation = transform.position;
+		launcherSpots = new GameObject[transform.childCount];
+		levelSpots = 4;
 
-		SpawnElectron ();
+		SetSpots ();
 
 
 
 	}
-	
 
+	void Update(){
+
+		transform.position = Vector2.MoveTowards (transform.position, newLocation, 2.7f * Time.deltaTime);
+
+		if (Input.GetMouseButtonDown (0) && numberOfSpots < levelSpots) {
+
+
+			SpawnElectron ();
+			RemoveSpot ();
+
+		}
+
+	}
+
+	void SetSpots(){
+
+		for (int i = 0; i < launcherSpots.Length; i++) {
+
+			launcherSpots [i] = transform.GetChild (i).gameObject;
+			if (i < levelSpots)
+				launcherSpots [i].SetActive (true);
+		}
+
+	}
 
 	public void SpawnElectron(){
 
-		GameObject babyElectron = (GameObject) Instantiate (electronPrefab, Waypoints.points [0], true);
-		babyElectron.GetComponent<Electron> ().explosionEffect = explosionEffect;
-		babyElectron.GetComponent<Electron> ().eManager = this;
-		babyElectron.GetComponent<Electron> ().speed += (float)score / 45;
-		Invoke ("SpawnElectron", spawnSpeed);
+
+
+//		GameObject babyElectron = (GameObject)Instantiate (electronPrefab, Waypoints.points [0], true);
+//		babyElectron.GetComponent<Electron> ().explosionEffect = explosionEffect;
+//		babyElectron.GetComponent<Electron> ().eManager = this;
+		electrons [numberOfSpots] = (GameObject)Instantiate (electronPrefab, Waypoints.points [0], true);
+		electrons[numberOfSpots].GetComponent<Electron> ().explosionEffect = explosionEffect;
+		electrons[numberOfSpots].GetComponent<Electron> ().eManager = this;
+		numberOfSpots++;
+		AddScore ();
+
+		if (numberOfSpots >= levelSpots)
+			RestartGame ();
+
+
+	}
+
+	public void RemoveSpot(){
+
+		//Remove the spot
+		launcherSpots [numberOfSpots - 1].SetActive (false);
+		//Make launcher go up a bit
+		newLocation = new Vector2 (transform.position.x, transform.position.y + .76f);
+
 
 
 	}
@@ -43,18 +91,33 @@ public class ElectronManager : MonoBehaviour {
 		scoreText.text = "" + score;
 
 
-		if (score >= 3 && score <= 10)
-			spawnSpeed = 1.6f;
-		if (score >= 11 && score <= 25)
-			spawnSpeed = 1.1f;
-		if (score >= 26 && score <= 35)
-			spawnSpeed = .8f;
-		if (score >= 36 && score <= 52)
-			spawnSpeed = .7f;
-		
+	}
 
+	public void ResetScore(){
+
+		score = 0;
+		scoreText.text = "" + score;
 
 	}
+
+	public void RestartGame(){
+
+		//Restart
+		foreach (GameObject go in electrons) {
+
+			Destroy (go);
+
+		}
+
+		SetSpots ();
+
+		transform.position = startPosition;
+
+		//Make it harder
+
+	}
+
+
 
 
 }

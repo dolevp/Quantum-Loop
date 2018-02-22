@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Electron : MonoBehaviour {
 
-	public float speed = 12f;
+	public float speed = 3f;
 
 	private Transform target;
 	private int currentPoint = 0;
-	public GameObject explosionEffect;
 	public ElectronManager eManager;
-	bool isNew = true;
+	public GameObject explosionEffect;
 
 	// Use this for initialization
 	void Start () {
@@ -34,20 +33,14 @@ public class Electron : MonoBehaviour {
 
 		}
 
-
-		if (Input.GetMouseButtonDown (0) && !isNew) {
-
-			if(Vector2.Distance(transform.position, Waypoints.points[0].position) <= 1f)
-
-			{
-				//Explode and add score
-				Explode ();
-
-			}
-
-		}
 	}
 
+	void OnCollisionEnter2D(Collision2D col) {
+
+		Explode ();
+
+
+	}
 
 
 	void GetNextWaypoint(){
@@ -61,15 +54,13 @@ public class Electron : MonoBehaviour {
 			currentPoint++;
 		target = Waypoints.points [currentPoint];
 
-		if(currentPoint >= 10)
-			isNew = false;
-
+	
 	}
 
 	void Explode(){
 
-		Destroy (Instantiate (explosionEffect), 3.3f);
+		Destroy(Instantiate(explosionEffect),3.6f);
 		Destroy (gameObject);
-		eManager.AddScore ();
+
 	}
 }
