@@ -17,9 +17,13 @@ public class ElectronManager : MonoBehaviour {
 	public GameObject[] launcherSpots;
 	public List<GameObject> electrons;
 	private Vector2 newLocation;
+	public AudioSource swoosh, nextlevel;
 	private Vector2 startPosition;
+	bool gameOver;
+
 	// Use this for initialization
 	void Start () {
+
 
 
 		startPosition = new Vector2(transform.position.x, transform.position.y - 0.37f);
@@ -37,7 +41,7 @@ public class ElectronManager : MonoBehaviour {
 
 		transform.position = Vector2.MoveTowards (transform.position, newLocation, 2.7f * Time.deltaTime);
 
-		if (Input.GetMouseButtonDown (0) && numberOfSpots < levelSpots) {
+		if (Input.GetMouseButtonDown (0) && numberOfSpots < levelSpots && !Camera.main.GetComponent<GameManager>().isGameOver) {
 
 			RemoveSpot ();
 			SpawnElectron ();
@@ -62,7 +66,7 @@ public class ElectronManager : MonoBehaviour {
 
 
 
-
+		swoosh.Play ();
 		electrons [numberOfSpots] = (GameObject)Instantiate (electronPrefab, Waypoints.points [0], true);
 		electrons[numberOfSpots].GetComponent<Electron> ().explosionEffect = explosionEffect;
 		electrons[numberOfSpots].GetComponent<Electron> ().eManager = this;
@@ -105,6 +109,9 @@ public class ElectronManager : MonoBehaviour {
 
 	public void NextStep(){
 
+
+		//play next level audio
+		nextlevel.Play ();
 		//Restart Game
 		// -------------------------
 

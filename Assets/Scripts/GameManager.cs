@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
 	public Animator anim;
+	public AudioSource gameOver;
+	public bool isGameOver = false;
 	// Use this for initialization
 	void Start () {
 
@@ -15,7 +17,9 @@ public class GameManager : MonoBehaviour {
 	public void GameOverAnim(){
 
 
+		isGameOver = true;
 		anim.Play ("GameOver");
+		gameOver.Play ();
 
 	}
 	public void RestartScene(){
