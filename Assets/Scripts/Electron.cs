@@ -37,7 +37,11 @@ public class Electron : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D col) {
 
+
 		Explode ();
+		//Game Over function on GameManager script
+		Camera.main.gameObject.GetComponent<GameManager> ().GameOverAnim ();
+
 
 
 	}

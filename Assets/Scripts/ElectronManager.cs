@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ElectronManager : MonoBehaviour {
 
@@ -20,6 +21,7 @@ public class ElectronManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+
 		startPosition = new Vector2(transform.position.x, transform.position.y - 0.37f);
 		newLocation = transform.position;
 		launcherSpots = new GameObject[transform.childCount];
@@ -37,9 +39,9 @@ public class ElectronManager : MonoBehaviour {
 
 		if (Input.GetMouseButtonDown (0) && numberOfSpots < levelSpots) {
 
-
-			SpawnElectron ();
 			RemoveSpot ();
+			SpawnElectron ();
+
 
 		}
 
@@ -77,7 +79,7 @@ public class ElectronManager : MonoBehaviour {
 	public void RemoveSpot(){
 
 		//Remove the spot
-		launcherSpots [numberOfSpots - 1].SetActive (false);
+		launcherSpots [numberOfSpots].SetActive (false);
 		//Make launcher go up a bit
 		newLocation = new Vector2 (transform.position.x, transform.position.y + .76f);
 
@@ -108,8 +110,10 @@ public class ElectronManager : MonoBehaviour {
 		//Reset current active spots count
 		numberOfSpots = 0;
 
+		//Make it harder
 		if(levelSpots<=8)
 			levelSpots++;
+		
 		//Destroy Electrons
 		foreach (GameObject go in electrons) {
 
@@ -120,16 +124,16 @@ public class ElectronManager : MonoBehaviour {
 		//Set spots
 		SetSpots ();
 
-
+		//Set launcher position to starting position
 		newLocation = startPosition;
 
 
-		electronSpeed += 0.7f;
-
 		//Make it harder
-
+		electronSpeed += 0.9f;
 
 	}
+
+
 
 
 
