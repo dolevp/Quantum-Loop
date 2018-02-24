@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour {
 
@@ -29,7 +30,14 @@ public class GameManager : MonoBehaviour {
 	}
 	public void RestartScene(){
 
-		adManager.ShowInter ();
+		PlayerPrefs.SetInt ("AdCount", PlayerPrefs.GetInt ("AdCount") + 1);
+
+		if (PlayerPrefs.GetInt ("AdCount") % 4 ==  0) {
+			
+			adManager.ShowInter ();
+			Analytics.CustomEvent ("AdsPerUser: " + PlayerPrefs.GetInt("AdCount"));
+
+		}
 		SceneManager.LoadScene ("Main");
 
 	}
