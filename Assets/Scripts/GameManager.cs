@@ -30,11 +30,13 @@ public class GameManager : MonoBehaviour {
 	}
 	public void RestartScene(){
 
-		PlayerPrefs.SetInt ("AdCount", PlayerPrefs.GetInt ("AdCount") + 1);
+        Debug.Log(PlayerPrefs.GetInt("GameCount"));
+		PlayerPrefs.SetInt ("GameCount", PlayerPrefs.GetInt ("GameCount") + 1);
 
-		if (PlayerPrefs.GetInt ("AdCount") % 4 ==  0) {
+		if (PlayerPrefs.GetInt ("GameCount") % 4 ==  0) {
 			
 			adManager.ShowInter ();
+            PlayerPrefs.SetInt("AdCount", PlayerPrefs.GetInt("AdCount") + 1);
 			Analytics.CustomEvent ("AdsPerUser: " + PlayerPrefs.GetInt("AdCount"));
 
 		}

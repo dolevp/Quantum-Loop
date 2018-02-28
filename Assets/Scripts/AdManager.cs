@@ -64,7 +64,10 @@ public class AdManager : MonoBehaviour {
 			interstitial.Show();
 		}
 
+		this.RequestInter ();
 	}
+
+
 
 
 }
