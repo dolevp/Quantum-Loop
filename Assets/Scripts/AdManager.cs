@@ -60,12 +60,22 @@ public class AdManager : MonoBehaviour {
 
 	public void ShowInter(){
 
+		Invoke ("PrivateShowInter", 1.6f);
+
+	}
+
+	public void PrivateShowInter(){
+
 		if (interstitial.IsLoaded()) {
 			interstitial.Show();
 		}
 
 		this.RequestInter ();
+
+
 	}
+
+
 
 
 

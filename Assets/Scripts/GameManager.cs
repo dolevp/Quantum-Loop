@@ -33,16 +33,16 @@ public class GameManager : MonoBehaviour {
 
 		SceneManager.LoadScene ("Main");
 
-		StartCoroutine (CheckForAds ());
+		CheckForAds ();
 
 
 
 
 	}
 
-	IEnumerator CheckForAds(){
+	void CheckForAds(){
 
-		yield return new WaitForSeconds (3.1f);
+
 
 		if (PlayerPrefs.GetInt ("GameCount") == 1) {
 
