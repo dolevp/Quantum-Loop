@@ -33,7 +33,16 @@ public class GameManager : MonoBehaviour {
 
 		SceneManager.LoadScene ("Main");
 
-		StartCoroutine (WaitABit ());
+		StartCoroutine (CheckForAds ());
+
+
+
+
+	}
+
+	IEnumerator CheckForAds(){
+
+		yield return new WaitForSeconds (3.1f);
 
 		if (PlayerPrefs.GetInt ("GameCount") == 1) {
 
@@ -42,26 +51,19 @@ public class GameManager : MonoBehaviour {
 			Analytics.CustomEvent ("AdsPerUser: " + PlayerPrefs.GetInt("AdCount"));
 
 		}
-			
 
 
-        Debug.Log(PlayerPrefs.GetInt("GameCount"));
+
+		Debug.Log(PlayerPrefs.GetInt("GameCount"));
 		PlayerPrefs.SetInt ("GameCount", PlayerPrefs.GetInt ("GameCount") + 1);
 
 		if (PlayerPrefs.GetInt ("GameCount") % 4 ==  0) {
-			
+
 			adManager.ShowInter ();
-            PlayerPrefs.SetInt("AdCount", PlayerPrefs.GetInt("AdCount") + 1);
+			PlayerPrefs.SetInt("AdCount", PlayerPrefs.GetInt("AdCount") + 1);
 			Analytics.CustomEvent ("AdsPerUser: " + PlayerPrefs.GetInt("AdCount"));
 
 		}
-
-
-	}
-
-	IEnumerator WaitABit(){
-
-		yield return new WaitForSeconds (1);
 
 	}
 }
