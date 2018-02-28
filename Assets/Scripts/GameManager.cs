@@ -30,6 +30,21 @@ public class GameManager : MonoBehaviour {
 	}
 	public void RestartScene(){
 
+
+		SceneManager.LoadScene ("Main");
+
+		StartCoroutine (WaitABit ());
+
+		if (PlayerPrefs.GetInt ("GameCount") == 1) {
+
+			adManager.ShowInter ();
+			PlayerPrefs.SetInt("AdCount", PlayerPrefs.GetInt("AdCount") + 1);
+			Analytics.CustomEvent ("AdsPerUser: " + PlayerPrefs.GetInt("AdCount"));
+
+		}
+			
+
+
         Debug.Log(PlayerPrefs.GetInt("GameCount"));
 		PlayerPrefs.SetInt ("GameCount", PlayerPrefs.GetInt ("GameCount") + 1);
 
@@ -40,7 +55,13 @@ public class GameManager : MonoBehaviour {
 			Analytics.CustomEvent ("AdsPerUser: " + PlayerPrefs.GetInt("AdCount"));
 
 		}
-		SceneManager.LoadScene ("Main");
+
+
+	}
+
+	IEnumerator WaitABit(){
+
+		yield return new WaitForSeconds (1);
 
 	}
 }
